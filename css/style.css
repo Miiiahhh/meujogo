@@ -21,7 +21,7 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* logo e robô no canto superior esquerdo */
+/* logo e robô no canto */
 #logoContainer {
   position: absolute;
   top: 10px;

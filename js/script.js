@@ -139,3 +139,8 @@ function init() {
 }
 -   img.src = `img/${name}.png`;
 +   img.src = `img/${name.toLowerCase()}.png`;
+- resImg.src     = `img/${chosen}.png`;
+- transImg.src   = `img/${chosen}.png`;
++ resImg.src     = `img/${chosen.toLowerCase()}.png`;
++ transImg.src   = `img/${chosen.toLowerCase()}.png`;
+

@@ -17,14 +17,14 @@ const translations = {
   SAPO: "FROG",       FADA: "FAIRY"
 };
 
-// pré-carrega imagens de img/<ITEM>.png
+// pré-carrega imagens de img/<nome minusculo>.png
 const images = {};
 Promise.all(items.map(name =>
   new Promise((res, rej) => {
     const img = new Image();
     img.onload = () => { images[name] = img; res(); };
-    img.onerror = () => rej(`Erro carregando img/${name}.png`);
-    img.src = `img/${name}.png`;
+    img.onerror = () => rej(`Erro carregando img/${name.toLowerCase()}.png`);
+    img.src = `img/${name.toLowerCase()}.png`;
   }))
 ).then(init).catch(console.error);
 
@@ -33,8 +33,7 @@ function init() {
   const canvas   = document.getElementById("canvas"),
         ctx      = canvas.getContext("2d");
   canvas.width = canvas.height = 700;
-  const W  = 700, H = 700,
-        cx = W/2, cy = H/2;
+  const W = 700, H = 700, cx = W/2, cy = H/2;
 
   const wheelEl   = document.getElementById("wheelContainer"),
         spinBtn   = document.getElementById("spinBtn"),
@@ -56,7 +55,6 @@ function init() {
             mid   = start + anglePer/2,
             sz    = 70;
 
-      // destaque em amarelo
       if (i === highlightIndex) {
         ctx.fillStyle   = "#ffeb3b";
         ctx.strokeStyle = "#f57f17";
@@ -74,7 +72,7 @@ function init() {
       ctx.fill();
       ctx.stroke();
 
-      // imagem
+      // desenha a imagem (usando lowercase)
       const ix = cx + Math.cos(mid)*(radius*0.6) - sz/2,
             iy = cy + Math.sin(mid)*(radius*0.6) - sz/2;
       ctx.drawImage(images[item], ix, iy, sz, sz);
@@ -94,25 +92,20 @@ function init() {
   drawWheel();
 
   spinBtn.addEventListener("click", () => {
-    // começa a música de fundo no primeiro clique
     if (bgMusic.paused) bgMusic.play().catch(() => {});
-
     if (items.length === 0) {
       alert("Todos os itens já foram escolhidos!");
       return;
     }
 
-    // limpa estado
     highlightIndex = null;
     drawWheel();
     resImg.src = ""; resTxt.textContent = "";
     transImg.src = ""; transTxt.textContent = "";
 
-    // reseta rotação
     gsap.killTweensOf(wheelEl);
     gsap.set(wheelEl, { rotation: 0 });
 
-    // gira
     const spins = gsap.utils.random(3,6),
           extra = gsap.utils.random(0,360),
           final = spins*360 + extra;
@@ -129,9 +122,10 @@ function init() {
         highlightIndex = idx;
         drawWheel();
 
-        resImg.src = `img/${chosen}.png`;
+        // mostra resultados com lowercase
+        resImg.src    = `img/${chosen.toLowerCase()}.png`;
         resTxt.textContent = chosen;
-        transImg.src = `img/${chosen}.png`;
+        transImg.src  = `img/${chosen.toLowerCase()}.png`;
         transTxt.textContent = translations[chosen];
 
         setTimeout(() => {

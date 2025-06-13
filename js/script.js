@@ -13,7 +13,7 @@ const translations = {
   ESCOLA: "SCHOOL", AMARELO: "YELLOW", IGREJA: "CHURCH", OVO: "EGG",
   URSO: "BEAR", UVA: "GRAPE", AMORA: "BLACKBERRY", GATO: "CAT",
   LUA: "MOON", CEBOLA: "ONION", SAPO: "FROG", FADA: "FAIRY"
-];
+};
 
 // pré-carrega todas as imagens de img/<ITEM>.png
 const images = {};

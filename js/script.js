@@ -13,21 +13,16 @@ const translations = {
   ESCOLA: "SCHOOL", AMARELO: "YELLOW", IGREJA: "CHURCH", OVO: "EGG",
   URSO: "BEAR", UVA: "GRAPE", AMORA: "BLACKBERRY", GATO: "CAT",
   LUA: "MOON", CEBOLA: "ONION", SAPO: "FROG", FADA: "FAIRY"
-};
+];
 
-// pré-carrega imagens
+// pré-carrega todas as imagens de img/<ITEM>.png
 const images = {};
 Promise.all(items.map(name =>
   new Promise((res, rej) => {
     const img = new Image();
-    img.onload = () => {
-      img.width = 70;
-      img.height = 70;
-      images[name] = img;
-      res();
-    };
+    img.onload = () => { images[name] = img; res(); };
     img.onerror = () => rej(`Erro carregando img/${name}.png`);
-    img.src = `img/${name}.png`;
+    img.src = `img/${name}.png`;        // <--- aqui
   }))
 ).then(init).catch(console.error);
 
@@ -36,8 +31,7 @@ function init() {
   const canvas     = document.getElementById("canvas"),
         ctx        = canvas.getContext("2d");
   canvas.width = canvas.height = 700;
-  const W    = 700, H = 700,
-        cx   = W/2, cy = H/2;
+  const W    = 700, H = 700, cx = W/2, cy = H/2;
 
   const wheelEl    = document.getElementById("wheelContainer"),
         spinBtn    = document.getElementById("spinBtn"),
@@ -52,21 +46,22 @@ function init() {
     const num      = items.length,
           anglePer = 2 * Math.PI / num,
           radius   = Math.min(cx, cy) - 20;
+
     ctx.clearRect(0, 0, W, H);
     items.forEach((item, i) => {
       const start = i * anglePer - Math.PI/2,
             mid   = start + anglePer/2,
-            imgSize = 70;
+            imgSz = 70;
 
       // destaque em amarelo
       if (i === highlightIndex) {
-        ctx.fillStyle = "#ffeb3b";
-        ctx.lineWidth = 4;
+        ctx.fillStyle   = "#ffeb3b";
         ctx.strokeStyle = "#f57f17";
+        ctx.lineWidth   = 4;
       } else {
-        ctx.fillStyle = i%2 ? "#ffffff" : "#f0f0f0";
-        ctx.lineWidth = 1;
+        ctx.fillStyle   = i%2 ? "#ffffff" : "#f0f0f0";
         ctx.strokeStyle = "#333";
+        ctx.lineWidth   = 1;
       }
 
       ctx.beginPath();
@@ -76,12 +71,12 @@ function init() {
       ctx.fill();
       ctx.stroke();
 
-      // imagem
-      const ix = cx + Math.cos(mid)*(radius*0.6) - imgSize/2,
-            iy = cy + Math.sin(mid)*(radius*0.6) - imgSize/2;
-      ctx.drawImage(images[item], ix, iy, imgSize, imgSize);
+      // desenha a imagem
+      const ix = cx + Math.cos(mid)*(radius*0.6) - imgSz/2,
+            iy = cy + Math.sin(mid)*(radius*0.6) - imgSz/2;
+      ctx.drawImage(images[item], ix, iy, imgSz, imgSz);
 
-      // texto
+      // desenha o texto
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(mid);
@@ -96,15 +91,13 @@ function init() {
   drawWheel();
 
   spinBtn.addEventListener("click", () => {
-    // inicia a música de fundo no primeiro clique
-    if (bgMusic.paused) {
-      bgMusic.play().catch(() => {/* Autoplay bloqueado? ignore */});
-    }
-
     if (items.length === 0) {
       alert("Todos os itens já foram escolhidos!");
       return;
     }
+
+    // toca música de fundo no primeiro clique
+    if (bgMusic.paused) bgMusic.play().catch(() => {});
 
     // limpa estado
     highlightIndex = null;
@@ -116,7 +109,7 @@ function init() {
     gsap.killTweensOf(wheelEl);
     gsap.set(wheelEl, { rotation: 0 });
 
-    // gira aleatório
+    // gira a roda
     const spins = gsap.utils.random(3,6),
           extra = gsap.utils.random(0,360),
           final = spins*360 + extra;
@@ -126,22 +119,24 @@ function init() {
       duration: 5,
       ease: "power3.out",
       onComplete() {
-        // cálculo do escolhido
+        // calcula índice do escolhido
         const angle = (final % 360 + 360) % 360,
-              idx   = Math.floor((items.length - angle/360*items.length)) % items.length,
+              idx   = Math.floor((items.length - (angle/360)*items.length)) % items.length,
               chosen = items[idx];
 
-        // destaca e mostra resultado
+        // destaca fatia
         highlightIndex = idx;
         drawWheel();
-        resImg.src = `img/${chosen}.png`;
+
+        // mostra imagem e texto, incluindo pasta img/
+        resImg.src     = `img/${chosen}.png`;    // <--- aqui também
         resTxt.textContent = chosen;
-        transImg.src = `img/${chosen}.png`;
+        transImg.src   = `img/${chosen}.png`;    // <--- e aqui
         transTxt.textContent = translations[chosen];
 
-        // remove depois de 5s
+        // remove o item após 5s e redesenha
         setTimeout(() => {
-          items.splice(idx, 1);
+          items.splice(idx,1);
           highlightIndex = null;
           drawWheel();
         }, 5000);

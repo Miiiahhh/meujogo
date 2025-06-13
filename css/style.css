@@ -1,6 +1,6 @@
 /* css/style.css */
 
-/* Animação de fundo em gradiente */
+/* fundo em gradiente animado */
 body {
   margin: 0;
   padding: 0;
@@ -11,38 +11,42 @@ body {
   font-family: sans-serif;
   position: relative;
   text-align: center;
-
-  /* fundo em gradiente animado */
   background: linear-gradient(-45deg, #8ec5fc, #e0c3fc, #ff9a9e, #fccb90);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
 }
-
 @keyframes gradientBG {
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* logo no canto superior */
-#schoolLogo {
+/* logo e robô no canto superior esquerdo */
+#logoContainer {
   position: absolute;
-  top: -5px;
-  left: -5px;
-  width: 350px;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+#logoContainer img {
+  width: 160px;
+  height: auto;
 }
 
-/* container da roda e dos resultados */
+/* layout principal */
 #gameArea {
   display: flex;
   align-items: flex-start;
   justify-content: center;
   gap: 40px;
-  margin-top: 80px; /* espaço abaixo da logo */
+  margin-top: 80px;
   flex-wrap: wrap;
 }
 
-/* roda com tamanho fixo */
+/* roda */
 #wheelArea {
   position: relative;
   width: 700px;
@@ -62,15 +66,13 @@ body {
   border: none;
 }
 
-/* container que agrupa as caixas e o botão */
+/* resultados */
 #resultsArea {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px; /* espaço entre elementos */
+  gap: 20px;
 }
-
-/* estilo das caixas de resultado */
 #resultBox,
 #translationBox {
   width: 200px;
@@ -98,7 +100,7 @@ body {
   font-weight: bold;
 }
 
-/* botão dentro de #resultsArea */
+/* botão */
 #spinBtn {
   padding: 14px 28px;
   font-size: 1.2rem;

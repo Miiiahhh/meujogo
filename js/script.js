@@ -137,3 +137,5 @@ function init() {
     });
   });
 }
+-   img.src = `img/${name}.png`;
++   img.src = `img/${name.toLowerCase()}.png`;

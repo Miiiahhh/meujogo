@@ -1,0 +1,114 @@
+/* css/style.css */
+
+/* Animação de fundo em gradiente */
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  font-family: sans-serif;
+  position: relative;
+  text-align: center;
+
+  /* fundo em gradiente animado */
+  background: linear-gradient(-45deg, #8ec5fc, #e0c3fc, #ff9a9e, #fccb90);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* logo no canto superior */
+#schoolLogo {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 350px;
+}
+
+/* container da roda e dos resultados */
+#gameArea {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 80px; /* espaço abaixo da logo */
+  flex-wrap: wrap;
+}
+
+/* roda com tamanho fixo */
+#wheelArea {
+  position: relative;
+  width: 700px;
+  height: 700px;
+}
+#wheelContainer {
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 50%;
+}
+#canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: transparent;
+  display: block;
+  border: none;
+}
+
+/* container que agrupa as caixas e o botão */
+#resultsArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* espaço entre elementos */
+}
+
+/* estilo das caixas de resultado */
+#resultBox,
+#translationBox {
+  width: 200px;
+  padding: 10px;
+  background: #ffffff;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+#resultBox h2,
+#translationBox h2 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+}
+#resultBox img,
+#translationBox img {
+  width: 120px;
+  height: auto;
+  margin-bottom: 10px;
+}
+#resultText,
+#translationText {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* botão dentro de #resultsArea */
+#spinBtn {
+  padding: 14px 28px;
+  font-size: 1.2rem;
+  background: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+#spinBtn:hover {
+  transform: scale(1.05);
+}

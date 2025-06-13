@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Roda Customizada</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Logo da escola -->
+  <img src="img/logo-escola.png" id="schoolLogo" alt="Logo da Escola">
+
+  <div id="gameArea">
+    <div id="wheelArea">
+      <div id="wheelContainer">
+        <canvas id="canvas" width="700" height="700"></canvas>
+      </div>
+    </div>
+
+    <div id="resultsArea">
+      <div id="resultBox">
+        <h2>PORTUGUÊS</h2>
+        <img id="resultImage" src="" alt="" />
+        <p id="resultText"></p>
+      </div>
+
+      <div id="translationBox">
+        <h2>EM INGLÊS</h2>
+        <img id="translationImage" src="" alt="" />
+        <p id="translationText"></p>
+      </div>
+
+      <button id="spinBtn">Girar Roda</button>
+    </div>
+  </div>
+
+  <!-- Música de fundo em loop -->
+  <audio id="bgMusic" src="audio/background.mp3" loop></audio>
+
+  <!-- GSAP v3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+  <!-- Script da roda -->
+  <script src="js/script.js"></script>
+</body>
+</html>

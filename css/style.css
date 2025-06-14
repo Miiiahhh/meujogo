@@ -32,7 +32,7 @@ body {
   gap: 8px;
 }
 #logoContainer img {
-  width: 350px;
+  width: 160px;
   height: auto;
 }
 
@@ -57,6 +57,9 @@ body {
   height: 100%;
   transform-origin: 50% 50%;
 }
+#wheelContainer:hover {
+  cursor: pointer;
+}
 #canvas {
   width: 100%;
   height: 100%;
@@ -66,7 +69,7 @@ body {
   border: none;
 }
 
-/* resultados */
+/* resultados (começam invisíveis para animar depois) */
 #resultsArea {
   display: flex;
   flex-direction: column;
@@ -81,6 +84,7 @@ body {
   border: 2px solid #ccc;
   border-radius: 4px;
   text-align: center;
+  opacity: 0;
 }
 #resultBox h2,
 #translationBox h2 {
